@@ -116,8 +116,9 @@ public class Main
                     }
                     case 3:
                     {
-                        System.out.println("What book would you like more info on");
+
                         bookDao.showListOfAllBook();
+                        System.out.println("What book would you like more info on: ");
                         String choice = sc.next();
                         bookDao.showBookInfo(choice);
                         // get more info on book

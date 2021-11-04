@@ -1,5 +1,7 @@
 package Book;
 
+import com.mysql.cj.util.StringUtils;
+
 import java.sql.*;
 import java.sql.Statement;
 
@@ -14,6 +16,7 @@ public class BookDaoImpl implements BookDao
         String sql = "select * from books";
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
+        /*
         ResultSetMetaData data = resultSet.getMetaData();
         int columnNumbers = data.getColumnCount();
         // print column label
@@ -29,6 +32,21 @@ public class BookDaoImpl implements BookDao
                 System.out.print(resultSet.getString(i) + "\t\t");
             }
             System.out.println();
+        }*/
+
+        System.out.println();
+        while (resultSet.next())
+        {
+            String title = resultSet.getString("title");
+            System.out.printf("Title: %s\n",title);
+            String author = resultSet.getString("author");
+            System.out.printf("Author: %s\n",author);
+            int price = resultSet.getInt("price");
+            System.out.printf("Price: %d\n",price);
+            String genre = resultSet.getString("genre");
+            System.out.printf("Genre: %s\n",genre);
+
+            System.out.println();
         }
     }
 
@@ -39,6 +57,7 @@ public class BookDaoImpl implements BookDao
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
 
+        /*
         ResultSetMetaData data = resultSet.getMetaData();
         int columnNumbers = data.getColumnCount();
         // print column label
@@ -53,6 +72,19 @@ public class BookDaoImpl implements BookDao
             {
                 System.out.print(resultSet.getString(i) + "\t\t");
             }
+            System.out.println();
+        }*/
+        while (resultSet.next())
+        {
+            String title = resultSet.getString("title");
+            System.out.printf("Title: %s\n",title);
+            String author = resultSet.getString("author");
+            System.out.printf("Author: %s\n",author);
+            int price = resultSet.getInt("price");
+            System.out.printf("Price: %d\n",price);
+            //String genre = resultSet.getString("genre");
+            //System.out.printf("Genre: %s\n",genre);
+
             System.out.println();
         }
     }
@@ -89,7 +121,7 @@ public class BookDaoImpl implements BookDao
         ResultSet resultSet = statement.executeQuery(sql);
 
         resultSet.next();
-        System.out.println(resultSet.getString(1));
+        System.out.println( "Description: "+resultSet.getString(1));
     }
 
     @Override
@@ -122,11 +154,7 @@ public class BookDaoImpl implements BookDao
 
         ResultSetMetaData data = resultSet.getMetaData();
         int columnNumbers = data.getColumnCount();
-        // print column label
-        for(int i = 1; i <=columnNumbers;i++)
-        {
-            System.out.print(data.getColumnLabel(i) +"\t\t");
-        }
+
         System.out.println();
         while(resultSet.next())
         {
