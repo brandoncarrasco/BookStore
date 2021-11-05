@@ -133,12 +133,14 @@ public class Main
                         System.out.println("Which book would you like to add to your cart");
                         String book = sc.next();
                         books.add(bookDao.getBook(book));
+                        bookDao.insertIntoCart(customer.getName(), bookDao.getBook(book));
                        // System.out.println();
 
                         break;
                     }
                     case 5:
                     {
+                        /*
                         if (books.isEmpty())
                         {
                             System.out.println("You have no books in your cart");
@@ -152,7 +154,8 @@ public class Main
 
                            System.out.println();
                            System.out.println();
-                       }
+                       }*/
+                        bookDao.getCart(customer.getName());
 
                        System.out.println("Would you like to checkout? (Yes or No)");
                        String choice = sc.next();

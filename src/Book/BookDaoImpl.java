@@ -4,6 +4,7 @@ import com.mysql.cj.util.StringUtils;
 
 import java.sql.*;
 import java.sql.Statement;
+import java.util.List;
 
 public class BookDaoImpl implements BookDao
 {
@@ -42,7 +43,7 @@ public class BookDaoImpl implements BookDao
             String author = resultSet.getString("author");
             System.out.printf("Author: %s\n",author);
             int price = resultSet.getInt("price");
-            System.out.printf("Price: %d\n",price);
+            System.out.printf("Price: $%d\n",price);
             String genre = resultSet.getString("genre");
             System.out.printf("Genre: %s\n",genre);
 
@@ -81,7 +82,7 @@ public class BookDaoImpl implements BookDao
             String author = resultSet.getString("author");
             System.out.printf("Author: %s\n",author);
             int price = resultSet.getInt("price");
-            System.out.printf("Price: %d\n",price);
+            System.out.printf("Price: $%d\n",price);
             //String genre = resultSet.getString("genre");
             //System.out.printf("Genre: %s\n",genre);
 
@@ -164,5 +165,44 @@ public class BookDaoImpl implements BookDao
             }
             System.out.println();
         }
+    }
+
+    @Override
+    public void insertIntoCart(String owner, Book book) throws SQLException
+    {
+        String sql = "insert into cart (owner,title,price) values (?,?,?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1,owner);
+        preparedStatement.setString(2, book.getTitle());
+        preparedStatement.setInt(3,book.getPrice());
+        preparedStatement.executeUpdate();
+    }
+
+    @Override
+    public void getCart(String owner) throws SQLException
+    {
+        String sql = "select title,price from cart where owner = '" + owner  +"'" ;
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        if(resultSet.next())
+        {
+            do
+            {
+                String title = resultSet.getString("title");
+                System.out.printf("Title: %s\n",title);
+                int price = resultSet.getInt("price");
+                System.out.printf("Price: $%d\n",price);
+                //String genre = resultSet.getString("genre");
+                //System.out.printf("Genre: %s\n",genre);
+
+                System.out.println();
+            } while(resultSet.next());
+        }
+        else
+        {
+            System.out.println("You have books in your cart");
+        }
+
     }
 }
